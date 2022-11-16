@@ -7,25 +7,25 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
-url = 'https://www.stagecoachbus.com/'
-from_ = "//*[@id = 'from']"
-to_ = "//*[@id = 'to']"
-plan_journey = "//*[@id = 'plan-journey']"
 
+class StageCoach:
 
-def florida():
-    driver.get(url)
-    uu = driver.find_element(By.XPATH, from_)
-    click_on_element(uu)
-    uu.send_keys('Bedworth, Warwickshire')
-    us = driver.find_element(By.XPATH, to_)
-    click_on_element(us)
-    us.send_keys('Nuneaton, Warwickshire')
-    us.send_keys(Keys.ENTER)
-    dd = driver.find_element(By.XPATH, plan_journey)
-    click_on_element(dd)
-    time.sleep(10)
+    driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
+    url = 'https://www.stagecoachbus.com/'
+    xpaths = {'from': "//*[@id = 'from']", 'to': "//*[@id = 'to']", 'plan_journey': "//*[@id = 'plan-journey']"}
+
+    def plan_journey(self):
+        self.driver.get(self.url)
+        origin = self.driver.find_element(By.XPATH, self.xpaths['from'])
+        click_on_element(origin)
+        origin.send_keys('Bedworth, Warwickshire')
+        destination = self.driver.find_element(By.XPATH, self.xpaths['to'])
+        click_on_element(destination)
+        destination.send_keys('Nuneaton, Warwickshire')
+        destination.send_keys(Keys.ENTER)
+        plan_journey_button = self.driver.find_element(By.XPATH, self.xpaths['plan_journey'])
+        click_on_element(plan_journey_button)
+        time.sleep(10)
 
 
 def click_on_element(element):
@@ -39,4 +39,4 @@ def click_on_element(element):
 
 
 if __name__ == '__main__':
-    florida()
+    StageCoach().plan_journey()
